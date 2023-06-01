@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head
+	th:replace="common/head :: head_fragment(title = 'ユーザ情報一覧', scripts = ~{::script}, links = ~{::link})"></head>
+<body>
+	<div class="container">
+		<h1>ユーザ情報一覧</h1>
+		<div class="float-end">
+			<a th:href="@{/user/userAdd}" class="btn btn-primary">新規登録はこちら</a>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ユーザID:</th>
+					<th>パスワード:</th>
+					<th>VIP:</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${userList}" class="align-middle">
+					<td th:text="${user.userName}"></td>
+					<td th:text="${user.password}"></td>
+					<td th:text="${user.status}"></td>
+					<!-- 
+					<form
+						th:action="@{/user/Buken/delete/{id}(id=${buken.propertyId})}"
+						method="post">
+						<button type="submit" class="btn btn-danger">删除</button>
+					</form>
+					 -->
+					<td><a th:href="@{/user/userEdit/{id}(id=${user.id})}"
+						class="btn btn-primary">编辑</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+
+	<!-- 
+			<div class="data-container">
+  <div th:each="buken : ${bukenList}" class="data-item">
+    <p th:text="${buken.propertyName}"></p>
+    <p>
+      <span th:if="${isVip}">
+        <span th:text="${#numbers.formatDecimal(new java.math.BigDecimal(buken.price).multiply(new java.math.BigDecimal('0.5')), 1, 'POINT', 2, 'COMMA')}"></span>
+        (VIP)
+      </span>
+      <span th:unless="${isVip}" th:text="${buken.price}"></span>
+    </p>
+    <img th:src="@{'/static/' + ${buken.imagePath}}" alt="Buken Image">
+  </div>
+</div>
+		 -->
+</body>
+</html>

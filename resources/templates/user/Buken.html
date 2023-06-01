@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<style>
+.container {
+	margin: 20px;
+	background: orange;
+}
+
+.float-end {
+	float: right;
+}
+
+.btn {
+	padding: 6px 12px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th, .table td {
+	padding: 8px;
+	border: 1px solid #ddd;
+}
+
+.align-middle {
+	vertical-align: middle !important;
+}
+
+#propertyId, #propertyName, #address, #propertyType, #period,
+	#propertyArea, #price, #syozokuCompanyId, #status {
+	width: 200px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+input[type="submit"] {
+	padding: 6px 12px;
+	font-size: 14px;
+	cursor: pointer;
+}
+</style>
+</head>
+<!-- 
+<head
+	th:replace="common/head :: head_fragment(title = '物件情報一覧', scripts = ~{::script}, links = ~{::link})"></head>
+ -->
+<body>
+	<div class="container">
+		<h1>物件情報一覧</h1>
+		<div class="float-end">
+			<a th:href="@{/user/BukenAdd}" class="btn btn-primary">新規登録はこちら</a>
+		</div>
+		<form action="/submit" method="post">
+			<input type="submit" value="Submit"> <input type="text"
+				name="uid">
+		</form>
+		<br>
+		<form action="/submitkikan" method="post">
+			<input type="submit" value="Submit"> <input type="text"
+				name="fromdate"> <input type="text" name="todate">
+		</form>
+		<p>
+			UID: <span th:text="${uidValue}"></span>
+		</p>
+
+
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>名字</th>
+					<th>住所</th>
+					<th>物件タイプ</th>
+					<th>販売期間</th>
+					<th>物件面積</th>
+					<th>賃料</th>
+					<th>所属会社ID</th>
+					<th>状態</th>
+					<th>写真</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="buken : ${bukenList}" class="align-middle">
+					<td th:text="${buken.propertyId}"></td>
+					<td th:text="${buken.propertyName}"></td>
+					<td th:text="${buken.address}"></td>
+					<td th:text="${buken.propertyType}"></td>
+					<td th:text="${buken.period}"></td>
+					<td th:text="${buken.propertyArea}"></td>
+
+					<td><span th:if="${isVip}"> <span
+							th:text="${#numbers.formatDecimal(new java.math.BigDecimal(buken.price).multiply(new java.math.BigDecimal('0.5')), 1, 'POINT', 2, 'COMMA')}"></span>
+							(VIP)
+					</span> <span th:unless="${isVip}" th:text="${buken.price}"></span></td>
+
+					<span th:text="${uidValue}"></span>
+					<td th:text="${buken.syozokuCompanyId}"></td>
+					<td th:text="${buken.status}"></td>
+
+					<td><img th:src="@{'/static/img/aa.png'}" alt="Buken Image">
+					</td>
+
+					<!-- 
+					<td th:text="${buken.imagePath}"></td>
+					 
+					<td><img th:src="@{'/user/image/' + ${buken.propertyId}}"
+						width="100" height="100" alt="Property Image"></td>
+					-->
+					<td>
+						<form
+							th:action="@{/user/Buken/delete/{id}(id=${buken.propertyId})}"
+							method="post">
+							<button type="submit" class="btn btn-danger">删除</button>
+						</form>
+					</td>
+					<!-- 元々は以下 -->
+					<!--  <form th:action="@{/user/BukenEdit}" method="post"　onsubmit="return confirmOrder()"> -->
+
+					<td>
+						<form th:action="@{/user/BukenEdit}" method="post" onsubmit="return confirmOrder()">
+							<input type="hidden" name="updateType" value="status" /> <input
+								type="hidden" name="propertyId" th:value="${buken.propertyId}" />
+							<button type="submit" class="btn btn-danger">注文</button>
+						</form>
+					</td>
+
+					<!-- 
+					<td>
+						<form th:action="@{/user/BukenEdit}" method="post"
+							onsubmit="handleOrder(event)">
+							<input type="hidden" name="updateType" value="status" /> <input
+								type="hidden" name="propertyId" th:value="${buken.propertyId}" />
+							<button type="submit" class="btn btn-danger">注文</button>
+						</form>
+					</td>
+					-->
+
+					<td><a
+						th:href="@{/user/BukenEdit/{propertyId}(propertyId=${buken.propertyId})}"
+						class="btn btn-primary">编辑</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- 
+			<div class="data-container">
+  <div th:each="buken : ${bukenList}" class="data-item">
+    <p th:text="${buken.propertyName}"></p>
+    <p>
+      <span th:if="${isVip}">
+        <span th:text="${#numbers.formatDecimal(new java.math.BigDecimal(buken.price).multiply(new java.math.BigDecimal('0.5')), 1, 'POINT', 2, 'COMMA')}"></span>
+        (VIP)
+      </span>
+      <span th:unless="${isVip}" th:text="${buken.price}"></span>
+    </p>
+    <img th:src="@{'/static/' + ${buken.imagePath}}" alt="Buken Image">
+  </div>
+</div>
+		 -->
+	<script>
+		function confirmOrder() {
+			return confirm("ご注文いたしますか?");
+		}
+
+		/* function handleOrder(event) {
+			event.preventDefault();
+
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "/user/BukenEdit");
+			xhr.setRequestHeader("Content-Type",
+					"application/x-www-form-urlencoded");
+
+			var formData = new FormData(event.target);
+			formData.append("hasOrdered", "true");
+
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					if (xhr.responseText === "success") {
+						sessionStorage.setItem("Status",
+								"Your order has been placed."); 
+					}
+				}
+			};
+
+			xhr.send(new URLSearchParams(formData));
+		} */
+	</script>
+
+
+</body>
+</html>

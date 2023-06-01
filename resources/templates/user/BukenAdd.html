@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <h1>Add New Buken</h1>
+    <form action="/user/BukenAdd" method="POST" enctype="multipart/form-data">
+    
+
+        <label for="propertyName">物件名:</label>
+        <input type="text" id="propertyName" name="propertyName" required><br><br>
+
+        <label for="address">住所:</label>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="propertyType">タイプ:</label>
+        <input type="text" id="propertyType" name="propertyType" required><br><br>
+        
+        <label for="period">販売期間:</label>
+        <input type="text" id="period" name="period" required><br><br>
+        
+        <label for="propertyArea">面積:</label>
+        <input type="text" id="propertyArea" name="propertyArea" required><br><br>
+        
+        <label for="price">賃料:</label>
+        <input type="text" id="price" name="price" required><br><br>
+
+        <label for="syozokuCompanyId">所属物件ID:</label>
+        <input type="text" id="syozokuCompanyId" name="syozokuCompanyId" required><br><br>
+        
+        <label for="status">状態:</label>
+        <input type="text" id="status" name="status" required><br><br>
+        
+        <label for="image">写真:</label>
+        <input type="file" id="image" name="image" required><br><br>
+ 		
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head
+	th:replace="common/head :: head_fragment(title = '迚ｩ莉ｶ諠�蝣ｱ荳�隕ｧ', scripts = ~{::script}, links = ~{::link})"></head>
+<body>
+	<div class="container">
+		<h1>迚ｩ莉ｶ諠�蝣ｱ荳�隕ｧ</h1>
+		<div class="float-end">
+			<a th:href="@{/user/BukenAdd}" class="btn btn-primary">譁ｰ隕冗匳骭ｲ縺ｯ縺薙■繧�</a>
+		</div>
+		<form action="/submit" method="post">
+			<input type="submit" value="Submit"> <input type="text"
+				name="uid">
+		</form>
+		<br>
+		<form action="/submitkikan" method="post">
+			<input type="submit" value="Submit"> <input type="text"
+				name="fromdate"> <input type="text" name="todate">
+		</form>
+		<p>
+			UID: <span th:text="${uidValue}"></span>
+		</p>
+
+
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>蜷榊ｭ�</th>
+					<th>菴乗園</th>
+					<th>迚ｩ莉ｶ繧ｿ繧､繝�</th>
+					<th>雋ｩ螢ｲ譛滄俣</th>
+					<th>迚ｩ莉ｶ髱｢遨�</th>
+					<th>雉�譁�</th>
+					<th>謇�螻樔ｼ夂､ｾID</th>
+					<th>迥ｶ諷�</th>
+					<th>蜀咏悄</th>
+					<th>謫堺ｽ�</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="buken : ${bukenList}" class="align-middle">
+					<td th:text="${buken.propertyId}"></td>
+					<td th:text="${buken.propertyName}"></td>
+					<td th:text="${buken.address}"></td>
+					<td th:text="${buken.propertyType}"></td>
+					<td th:text="${buken.period}"></td>
+					<td th:text="${buken.propertyArea}"></td>
+
+					<td><span th:if="${isVip}"> <span
+							th:text="${#numbers.formatDecimal(new java.math.BigDecimal(buken.price).multiply(new java.math.BigDecimal('0.5')), 1, 'POINT', 2, 'COMMA')}"></span>
+							(VIP)
+					</span> <span th:unless="${isVip}" th:text="${buken.price}"></span></td>
+
+
+					<td th:text="${buken.syozokuCompanyId}"></td>
+					<td th:text="${buken.status}"></td>
+
+					<td><img th:src="@{'/static/' + ${buken.imagePath}}"
+						alt="Buken Image"> <img th:src="@{'/static/img/a.jpg'}"
+						alt="Buken Image"> <img th:src="@{'/static/img/b.jpg'}"
+						alt="Buken Image"></td>
+
+					<!-- 
+					<td th:text="${buken.imagePath}"></td>
+					 
+					<td><img th:src="@{'/user/image/' + ${buken.propertyId}}"
+						width="100" height="100" alt="Property Image"></td>
+
+					<td>
+					-->
+					<form
+						th:action="@{/user/Buken/delete/{id}(id=${buken.propertyId})}"
+						method="post">
+						<button type="submit" class="btn btn-danger">蛻�髯､</button>
+					</form>
+					</td>
+					<td><a
+						th:href="@{/user/BukenEdit/{propertyId}(propertyId=${buken.propertyId})}"
+						class="btn btn-primary">郛冶ｾ�</a></td>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

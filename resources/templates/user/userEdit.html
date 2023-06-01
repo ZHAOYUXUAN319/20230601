@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit user</title>
+</head>
+<body>
+    <h1>Edit user</h1>
+    <form action="/user/userEdit" method="POST">
+
+        <input type="hidden" id="id" name="id" th:value="${userDto.id}">
+        
+        <label for="userName">ユーザID：</label>
+        <input type="text" id="userName" name="userName" th:value="${userDto.userName}" required><br><br>
+
+        <label for="password">パスワード：</label>
+        <input type="text" id="password" name="password" th:value="${userDto.password}" required><br><br>
+
+		<label for="status">VIP：</label>
+        <input type="text" id="status" name="status" th:value="${userDto.status}" required><br><br>
+		
+        <input type="submit" value="Update user">
+    </form>
+</body>
+</html>

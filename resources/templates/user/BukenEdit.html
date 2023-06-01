@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit Buken</title>
+</head>
+<body>
+    <h1>Edit Buken</h1>
+    <!-- 
+    <form action="/user/BukenEdit" method="POST" enctype="multipart/form-data">
+	 -->
+	<form action="/user/BukenEdit" method="POST">
+        <input type="hidden" id="propertyId" name="propertyId" th:value="${bukenDto.propertyId}">
+        
+        <label for="propertyName">物件名：</label>
+        <input type="text" id="propertyName" name="propertyName" th:value="${bukenDto.propertyName}" required><br><br>
+
+        <label for="address">住所：</label>
+        <input type="text" id="address" name="address" th:value="${bukenDto.address}" required><br><br>
+
+        <label for="propertyType">タイプ：</label>
+        <input type="text" id="propertyType" name="propertyType" th:value="${bukenDto.propertyType}" required><br><br>
+        
+        <label for="period">販売期間:</label>
+        <input type="text" id="period" name="period" th:value="${bukenDto.period}" required><br><br>
+        
+        <label for="propertyArea">面積：</label>
+        <input type="number" id="propertyArea" name="propertyArea" th:value="${bukenDto.propertyArea}" required><br><br>
+        
+        <label for="price">賃料：</label>
+        <input type="number" id="price" name="price" th:value="${bukenDto.price}" required><br><br>
+
+        <label for="syozokuCompanyId">所属物件ID：</label>
+        <input type="text" id="syozokuCompanyId" name="syozokuCompanyId" th:value="${bukenDto.syozokuCompanyId}" required><br><br>
+        
+        <label for="status">状態：</label>
+        <input type="text" id="status" name="status" th:value="${bukenDto.status}" required><br><br>
+		<!-- 
+		<label for="imagePath">写真:</label>
+		<input type="file" id="imagePath" name="imagePath" th:value="${bukenDto.imagePath}" required><br><br>
+		 -->
+		<input type="hidden" name="updateType" value="all">
+        <input type="submit" value="Update Buken">
+    </form>
+</body>
+</html>

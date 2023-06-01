@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+<!-- <p th:text="${#session.getAttribute('message')}"></p> -->
+<p th:text="${session.message}"></p>
+
+	<button id="showBukenButton" class="btn btn-primary">物件公開一覧</button>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#showBukenButton").click(function() {
+				$.ajax({
+					//請求URL
+					url : "/user/Buken",
+					method : "GET",
+					success : function(response) {
+						//htmlのbukenTableところに情報を送る
+						$("#bukenTable").html(response);
+					},
+					error : function() {
+						alert("失敗");
+					}
+				});
+			});
+		});
+	</script>
+	<button id="showBukenButtonHikoukei" class="btn btn-primary">物件非公開一覧</button>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#showBukenButtonHikoukei").click(function() {
+				$.ajax({
+					//請求URL
+					url : "/user/BukenHikoukei",
+					method : "GET",
+					success : function(response) {
+						//htmlのbukenTableところに情報を送る
+						$("#bukenTable").html(response);
+					},
+					error : function() {
+						alert("失敗");
+					}
+				});
+			});
+		});
+	</script>
+	<div id="bukenTable">
+
+	</div>
+
+</body>
+</html>

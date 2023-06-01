@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head :: head_fragment(title = '物件情報一覧', scripts = ~{::script}, links = ~{::link})">
+    <!-- 添加自定义的CSS样式 -->
+    <style>
+        .menu {
+            width: 200px;
+            background-color: #f5f5f5;
+            float: left;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <!-- 添加竖排拉伸菜单内容 -->
+            <ul>
+                <li><a href="#">菜单项1</a></li>
+                <li><a href="#">菜单项2</a></li>
+                <li><a href="#">菜单项3</a></li>
+                <!-- 添加更多菜单项 -->
+            </ul>
+        </div>
+        <div class="content">
+            <h1>物件情報一覧</h1>
+            <div class="float-end">
+                <a th:href="@{/user/BukenAdd}" class="btn btn-primary">新規登録はこちら</a>
+            </div>
+            <!-- 其他内容保持不变 -->
+            <form action="/submit" method="post">
+                <input type="submit" value="Submit"> <input type="text" name="uid">
+            </form>
+            <br>
+            <form action="/submitkikan" method="post">
+                <input type="submit" value="Submit"> <input type="text" name="fromdate"> <input type="text" name="todate">
+            </form>
+            <p>UID: <span th:text="${uidValue}"></span></p>
+            <table class="table table-striped">
+                <!-- 表格内容保持不变 -->
+            </table>
+            <!-- 其他内容保持不变 -->
+        </div>
+    </div>
+    <p>isVip: ${isVip}</p>
+</body>
+</html>

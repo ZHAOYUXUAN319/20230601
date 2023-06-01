@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head
+	th:replace="common/head :: head_fragment(title = '物件情報一覧', scripts = ~{::script}, links = ~{::link})"></head>
+<body>
+
+<div th:if="${searchResults}">
+    <h2>搜索结果</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名字</th>
+                <th>地址</th>
+                <th>物件类型</th>
+                <th>物件区域</th>
+                <th>价格</th>
+                <th>所属公司ID</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="result : ${searchResults}">
+                <td th:text="${result.propertyId}"></td>
+                <td th:text="${result.propertyName}"></td>
+                <td th:text="${result.address}"></td>
+                <td th:text="${result.propertyType}"></td>
+                <td th:text="${result.propertyArea}"></td>
+                <td th:text="${result.price}"></td>
+                <td th:text="${result.syozokuCompanyId}"></td>
+                <td th:text="${result.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
